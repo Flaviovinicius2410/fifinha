@@ -4,32 +4,23 @@ import pandas as pd
 # Carregando o conjunto de dados do Titanic
 df = pd.read_csv("train.csv")
 
-# Adicione uma coluna 'Contagem' ao DataFrame para armazenar a contagem de passageiros
-df['Contagem'] = 1
+# Informações sobre jogadores
+st.subheader("Informações sobre Jogadores:")
+st.write(df[['name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
 
-st.title("Dataset - Titanic")
+# Gráfico de contagem de jogadores por posição
+st.subheader("Contagem de Jogadores por Posição:")
+position_counts = df['position'].str.split('|', expand=True).stack().value_counts()
+plt.bar(position_counts.index, position_counts.values)
+plt.xlabel('Posição')
+plt.ylabel('Contagem')
+plt.title('Contagem de Jogadores por Posição')
+st.pyplot()
 
-nome = st.text_input("Informe seu nome")
-st.write(f"Saudações {nome}!")
-
-# Informação da quantidade de passageiros
-st.subheader("Quantidade de Passageiros:")
-st.write(f"Total de passageiros: {len(df)}")
-
-# Informação sobre sobreviventes
-sobreviventes = df['Survived'].sum()
-nao_sobreviventes = len(df) - sobreviventes
-
-st.subheader("Sobreviventes:")
-st.write(f"Passageiros que sobreviveram: {sobreviventes}")
-
-st.subheader("Não Sobreviventes:")
-st.write(f"Passageiros que não sobreviveram: {nao_sobreviventes}")
-
-# Outras informações
-'''
-Hoje irei mostrar todos os gráficos referentes ao dataset de pesquisas
-envolvendo o Titanic, como Sobreviveu, Pclass, Nome, Sexo, Idade, SibSp, Parch, Bilhete, Tarifa, Cabine, Embarcado.
-
-Clicando ao lado será possível visualizar o modelo grafico.
-'''
+# Gráfico de distribuição de idades
+st.subheader("Distribuição de Idades:")
+plt.hist(df['age'], bins=20, edgecolor='black')
+plt.xlabel('Idade')
+plt.ylabel('Contagem')
+plt.title('Distribuição de Idades dos Jogadores')
+st.pyplot()
