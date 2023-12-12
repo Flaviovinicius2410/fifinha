@@ -32,8 +32,11 @@ top_50_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(50
 fig, ax = plt.subplots()
 bar_width = 0.5
 bar_spacing = 1  # Espaçamento entre as barras
-ax.barh(top_50_players['name'].str.cat([bar_spacing.astype(str)] * len(top_50_players)), top_50_players['overall'], color='green', height=bar_width, label='Overall')
-ax.barh(top_50_players['name'].str.cat([bar_spacing.astype(str)] * len(top_50_players)), top_50_players['potential'], color='orange', height=bar_width, label='Potencial')
+
+# Aplicando str.cat corretamente
+names_with_spacing = top_50_players['name'] + top_50_players['name'].astype(str).str.cat([bar_spacing] * len(top_50_players))
+ax.barh(names_with_spacing, top_50_players['overall'], color='green', height=bar_width, label='Overall')
+ax.barh(names_with_spacing, top_50_players['potential'], color='orange', height=bar_width, label='Potencial')
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
 ax.set_title('Top 50 Jogadores')
