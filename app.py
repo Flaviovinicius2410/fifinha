@@ -31,11 +31,12 @@ st.subheader("Top 50 Jogadores - Gráfico de Barras:")
 top_50_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(50, ['overall', 'age', 'potential', 'hits'])
 fig, ax = plt.subplots()
 bar_width = 0.5
-ax.barh(top_50_players['name'], top_50_players['overall'], color='green', height=bar_width)
-ax.barh(top_50_players['name'], top_50_players['potential'], color='orange', height=bar_width, left=top_50_players['overall'])
+bar_spacing = 1  # Espaçamento entre as barras
+ax.barh(top_50_players['name'], top_50_players['overall'], color='green', height=bar_width, label='Overall')
+ax.barh(top_50_players['name'] + bar_spacing, top_50_players['potential'], color='orange', height=bar_width, label='Potencial')
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
 ax.set_title('Top 50 Jogadores')
-ax.legend(['Overall', 'Potencial'])
+ax.legend()
 ax.invert_yaxis()  # Inverte a ordem dos jogadores
 st.pyplot(fig)
