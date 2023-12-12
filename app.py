@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Carregando o conjunto de dados do Titanic
 # Usando ";" como delimitador no read_csv
@@ -33,8 +34,8 @@ fig, ax = plt.subplots()
 bar_width = 0.5
 bar_spacing = 1  # Espaçamento entre as barras
 
-# Aplicando str.cat corretamente
-names_with_spacing = top_50_players['name'] + top_50_players['name'].astype(str).str.cat([bar_spacing] * len(top_50_players))
+# Corrigindo o espaçamento entre os nomes
+names_with_spacing = top_50_players['name'] + ' ' + (np.arange(len(top_50_players)) * bar_spacing).astype(str)
 ax.barh(names_with_spacing, top_50_players['overall'], color='green', height=bar_width, label='Overall')
 ax.barh(names_with_spacing, top_50_players['potential'], color='orange', height=bar_width, label='Potencial')
 ax.set_xlabel('Pontuação')
