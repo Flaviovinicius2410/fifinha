@@ -9,18 +9,20 @@ df = pd.read_csv("train.csv", delimiter=";")
 # Imprima as colunas do DataFrame
 st.write("Colunas no DataFrame:", df.columns)
 
-# Informações sobre jogadoresS
+# Informações sobre jogadores
 st.subheader("Informações sobre Jogadores:")
 st.write(df[['player_id', 'name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
 
 # Filtrar apenas as posições puras
 pure_positions = df['position'].str.split('|', expand=True).stack().value_counts()
 
-# Gráfico de distribuição percentual de jogadores por posição pura
-st.subheader("Distribuição Percentual de Jogadores por Posição Pura:")
+# Gráfico de distribuição de jogadores por posição pura em um gráfico de barras
+st.subheader("Contagem de Jogadores por Posição Pura:")
 fig, ax = plt.subplots()
-ax.pie(pure_positions, labels=pure_positions.index, autopct='%1.1f%%', startangle=140)
-ax.axis('equal')  # Assegura que o gráfico de pizza seja circular
+pure_positions.sort_values().plot(kind='barh', ax=ax, color='skyblue')
+ax.set_xlabel('Contagem de Jogadores')
+ax.set_ylabel('Posição Pura')
+ax.set_title('Contagem de Jogadores por Posição Pura')
 st.pyplot(fig)
 
 # Gráfico de distribuição de idades
