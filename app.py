@@ -9,7 +9,7 @@ df = pd.read_csv("train.csv", delimiter=";")
 # Imprima as colunas do DataFrame
 st.write("Colunas no DataFrame:", df.columns)
 
-# Informações sobre jogadores
+# Informações sobre jogadoresS
 st.subheader("Informações sobre Jogadores:")
 st.write(df[['player_id', 'name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
 
