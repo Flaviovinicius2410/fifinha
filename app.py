@@ -25,7 +25,13 @@ ax.set_ylabel('Posição Geral')
 ax.set_title('Posições dos jogadores')
 st.pyplot(fig)
 
-# Adicionando tabela dos 50 melhores jogadores
-st.subheader("Top 50 Jogadores:")
-top_50_players = df[['name', 'overall']].nlargest(50, 'overall')
-st.table(top_50_players.set_index('name'))
+# Adicionando gráfico de barras para os 50 melhores jogadores
+st.subheader("Top 50 Jogadores - Gráfico de Barras:")
+# Adicionando critério de desempate usando idade, potencial e hits
+top_50_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(50, ['overall', 'age', 'potential', 'hits'])
+fig, ax = plt.subplots()
+top_50_players.set_index('name').plot(kind='bar', y='overall', ax=ax, color='green', legend=False)
+ax.set_xlabel('Jogadores')
+ax.set_ylabel('Overall')
+ax.set_title('Top 50 Jogadores')
+st.pyplot(fig)
