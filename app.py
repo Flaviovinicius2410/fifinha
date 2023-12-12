@@ -13,17 +13,14 @@ st.write("Colunas no DataFrame:", df.columns)
 st.subheader("Informações sobre Jogadores:")
 st.write(df[['player_id', 'name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
 
-# Gráfico de distribuição percentual de jogadores por posição
-st.subheader("Distribuição Percentual de Jogadores por Posição:")
-# Usando explode() para lidar com valores separados por '|'
-position_counts = df['position'].explode().value_counts(normalize=True)
+# Filtrar apenas as posições puras
+pure_positions = df['position'].str.split('|', expand=True).stack().value_counts()
 
-# Criar gráfico de pizza com Matplotlib
+# Gráfico de distribuição percentual de jogadores por posição pura
+st.subheader("Distribuição Percentual de Jogadores por Posição Pura:")
 fig, ax = plt.subplots()
-ax.pie(position_counts, labels=position_counts.index, autopct='%1.1f%%', startangle=140)
+ax.pie(pure_positions, labels=pure_positions.index, autopct='%1.1f%%', startangle=140)
 ax.axis('equal')  # Assegura que o gráfico de pizza seja circular
-
-# Exibir o gráfico usando Streamlit
 st.pyplot(fig)
 
 # Gráfico de distribuição de idades
