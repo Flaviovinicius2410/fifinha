@@ -12,11 +12,11 @@ st.write("Colunas no DataFrame:", df.columns)
 st.subheader("Informações sobre Jogadores:")
 st.write(df[['player_id', 'name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
 
-# Gráfico de contagem de jogadores por posição
-st.subheader("Contagem de Jogadores por Posição:")
+# Gráfico de distribuição percentual de jogadores por posição
+st.subheader("Distribuição Percentual de Jogadores por Posição:")
 # Usando explode() para lidar com valores separados por '|'
-position_counts = df['position'].explode().value_counts()
-st.bar_chart(position_counts)
+position_counts = df['position'].explode().value_counts(normalize=True)
+st.pie(position_counts, labels=position_counts.index, autopct='%1.1f%%', startangle=140)
 
 # Gráfico de distribuição de idades
 st.subheader("Distribuição de Idades:")
