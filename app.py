@@ -4,9 +4,13 @@ import pandas as pd
 # Carregando o conjunto de dados do Titanic
 df = pd.read_csv("train.csv")
 
+# Imprima as colunas do DataFrame
+st.write("Colunas no DataFrame:", df.columns)
+
 # Informações sobre jogadores
 st.subheader("Informações sobre Jogadores:")
 st.write(df[['name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
+
 
 # Gráfico de contagem de jogadores por posição
 st.subheader("Contagem de Jogadores por Posição:")
