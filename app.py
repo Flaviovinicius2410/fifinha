@@ -11,20 +11,15 @@ st.write("Colunas no DataFrame:", df.columns)
 st.subheader("Informações sobre Jogadores:")
 st.write(df[['name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
 
-
 # Gráfico de contagem de jogadores por posição
 st.subheader("Contagem de Jogadores por Posição:")
 position_counts = df['position'].str.split('|', expand=True).stack().value_counts()
-df.bar(position_counts.index, position_counts.values)
-df.xlabel('Posição')
-df.ylabel('Contagem')
-df.title('Contagem de Jogadores por Posição')
-st.pyplot()
+st.bar_chart(position_counts)  # Corrigido para st.bar_chart
 
 # Gráfico de distribuição de idades
 st.subheader("Distribuição de Idades:")
-df.hist(df['age'], bins=20, edgecolor='black')
-df.xlabel('Idade')
-df.ylabel('Contagem')
-df.title('Distribuição de Idades dos Jogadores')
+st.hist(df['age'], bins=20, edgecolor='black')  # Corrigido para st.hist
+st.xlabel('Idade')
+st.ylabel('Contagem')
+st.title('Distribuição de Idades dos Jogadores')
 st.pyplot()
