@@ -22,7 +22,7 @@ fig, ax = plt.subplots()
 pure_positions.sort_values().plot(kind='barh', ax=ax, color='skyblue')
 ax.set_xlabel('Contagem de Jogadores')
 ax.set_ylabel('Posição Pura')
-ax.set_title('Contagem de Jogadores por Posição Pura')
+ax.set_title('Posições dos jogadores')
 st.pyplot(fig)
 
 # Gráfico de distribuição de idades
