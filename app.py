@@ -28,16 +28,20 @@ st.pyplot(fig)
 
 # Adicionando gráfico de barras para os 15 melhores jogadores
 st.subheader("Top 15 Jogadores - Gráfico de Barras:")
-# Adicionando critério de desempate usando idade, potencial e hits
+# Adicionando critério de desempate usando idade, potencial, hits e potencial máximo
 top_15_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(15, ['overall', 'age', 'potential', 'hits'])
 
-# Calculando a diferença de potencial em relação ao overall
-diff_potential = top_15_players.groupby('name')['potential'].transform('sum') - top_15_players['potential']
+# Calculando o potencial atual, potencial máximo, a diferença de potencial e a idade invertida
+current_potential = top_15_players['potential']
+max_potential = top_15_players.groupby('name')['potential'].transform('max')
+potential_diff = max_potential - current_potential
+inverse_age = 1 / top_15_players['age']
+
 # Definindo cores com base na diferença de potencial
-colors = np.where(diff_potential >= 0, 'green', 'orange')
+colors = np.where(potential_diff >= 0, 'green', 'orange')
 
 # Ordenando a tabela dos melhores 15 jogadores do maior para o menor
-top_15_players = top_15_players.sort_values(by='overall', ascending=False)
+top_15_players = top_15_players.sort_values(by=['overall', 'age', 'potential', 'hits'], ascending=[False, True, False, False])
 
 # Gráfico de barras com destaque amarelo para a diferença de potencial
 bar_width = 0.5
@@ -46,17 +50,24 @@ names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_player
 
 fig, ax = plt.subplots()
 ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
-ax.barh(names_with_spacing, diff_potential.abs(), left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial')
+ax.barh(names_with_spacing, potential_diff.abs(), left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial')
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
 ax.set_title('Top 15 Jogadores - Overall e Diferença de Potencial')
 ax.legend()
 ax.invert_yaxis()  # Inverte a ordem dos jogadores
 
-# Exibir tabela de Overall e Diferença de Potencial
-st.write("### Tabela de Overall e Diferença de Potencial:")
-overall_and_diff_potential = pd.DataFrame({'Nome': top_15_players['name'], 'Overall': top_15_players['overall'], 'Diferença de Potencial': diff_potential})
-st.write(overall_and_diff_potential)
+# Exibir tabela de Overall, Potencial Atual, Potencial Máximo, Diferença de Potencial e Idade Invertida
+st.write("### Tabela de Overall, Potencial Atual, Potencial Máximo, Diferença de Potencial e Idade Invertida:")
+potentials_table = pd.DataFrame({
+    'Nome': top_15_players['name'],
+    'Overall': top_15_players['overall'],
+    'Potencial Atual': current_potential,
+    'Potencial Máximo': max_potential,
+    'Diferença de Potencial': potential_diff,
+    'Idade Invertida': inverse_age
+})
+st.write(potentials_table)
 
 # Mostrar o gráfico
 st.pyplot(fig)
