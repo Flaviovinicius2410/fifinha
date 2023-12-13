@@ -57,14 +57,13 @@ ax.set_title('Top 15 Jogadores - Overall e Diferença de Potencial')
 ax.legend()
 ax.invert_yaxis()  # Inverte a ordem dos jogadores
 
-# Exibir tabela de Overall, Potencial Atual, Potencial Máximo, Diferença de Potencial e Idade Invertida
-st.write("### Tabela de Overall, Potencial Atual, Potencial Máximo, Diferença de Potencial e Idade Invertida:")
+# Exibir tabela de Overall, Diferença de Potencial, Potencial Máximo e Idade Invertida
+st.write("### Tabela de Overall, Diferença de Potencial, Potencial Máximo e Idade Invertida:")
 potentials_table = pd.DataFrame({
     'Nome': top_15_players['name'],
     'Overall': top_15_players['overall'],
-    'Potencial Atual': current_potential,
-    'Potencial Máximo': max_potential,
     'Diferença de Potencial': potential_diff,
+    'Potencial Máximo': max_potential,
     'Idade Invertida': inverse_age
 })
 st.write(potentials_table)
