@@ -32,17 +32,18 @@ st.subheader("Top 15 Jogadores - Gráfico de Barras:")
 top_15_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(15, ['overall', 'age', 'potential', 'hits'])
 fig, ax = plt.subplots()
 
-# Gráfico de barras empilhadas para Overall e Potencial
-bar_width = 0.5
-bar_spacing = 1  # Espaçamento entre as barras
-names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_players)) * bar_spacing).astype(str)
-
 # Calculando a diferença de potencial em relação ao overall
 diff_potential = top_15_players['potential'] - top_15_players['overall']
 # Definindo cores com base na diferença de potencial
 colors = np.where(diff_potential >= 0, 'green', 'orange')
 
-ax.barh(names_with_spacing, top_15_players['overall'], color=colors, height=bar_width, label='Overall')
+# Gráfico de barras empilhadas para Overall e Potencial
+bar_width = 0.5
+bar_spacing = 1  # Espaçamento entre as barras
+names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_players)) * bar_spacing).astype(str)
+
+# Gráfico de barras com destaque amarelo para a diferença de potencial
+ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
 ax.barh(names_with_spacing, diff_potential.abs(), left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial')
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
@@ -52,7 +53,7 @@ ax.invert_yaxis()  # Inverte a ordem dos jogadores
 
 # Exibir tabela de Overall e Diferença de Potencial
 st.write("### Tabela de Overall e Diferença de Potencial:")
-overall_and_diff_potential = pd.DataFrame({'Overall': top_15_players['overall'], 'Diferença de Potencial': diff_potential})
+overall_and_diff_potential = pd.DataFrame({'Nome': top_15_players['name'], 'Overall': top_15_players['overall'], 'Diferença de Potencial': diff_potential})
 st.write(overall_and_diff_potential)
 
 # Mostrar o gráfico
