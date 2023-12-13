@@ -26,21 +26,21 @@ ax.set_ylabel('Posição Geral')
 ax.set_title('Posições dos jogadores')
 st.pyplot(fig)
 
-# Adicionando gráfico de barras para os 50 melhores jogadores
-st.subheader("Top 50 Jogadores - Gráfico de Barras:")
+# Adicionando gráfico de barras para os 15 melhores jogadores
+st.subheader("Top 15 Jogadores - Gráfico de Barras:")
 # Adicionando critério de desempate usando idade, potencial e hits
-top_50_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(50, ['overall', 'age', 'potential', 'hits'])
+top_15_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(15, ['overall', 'age', 'potential', 'hits'])
 fig, ax = plt.subplots()
 bar_width = 0.5
 bar_spacing = 1  # Espaçamento entre as barras
 
 # Corrigindo o espaçamento entre os nomes
-names_with_spacing = top_50_players['name'] + ' ' + (np.arange(len(top_50_players)) * bar_spacing).astype(str)
-ax.barh(names_with_spacing, top_50_players['overall'], color='green', height=bar_width, label='Overall')
-ax.barh(names_with_spacing, top_50_players['potential'], color='orange', height=bar_width, label='Potencial')
+names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_players)) * bar_spacing).astype(str)
+ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
+ax.barh(names_with_spacing, top_15_players['potential'], color='orange', height=bar_width, label='Potencial')
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
-ax.set_title('Top 50 Jogadores')
+ax.set_title('Top 15 Jogadores')
 ax.legend()
 ax.invert_yaxis()  # Inverte a ordem dos jogadores
 st.pyplot(fig)
