@@ -31,16 +31,34 @@ st.subheader("Top 15 Jogadores - Gráfico de Barras:")
 # Adicionando critério de desempate usando idade, potencial e hits
 top_15_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(15, ['overall', 'age', 'potential', 'hits'])
 fig, ax = plt.subplots()
+
+# Gráfico de barras para o Overall
 bar_width = 0.5
 bar_spacing = 1  # Espaçamento entre as barras
-
-# Corrigindo o espaçamento entre os nomes
 names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_players)) * bar_spacing).astype(str)
 ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
+ax.set_xlabel('Pontuação')
+ax.set_ylabel('Jogadores')
+ax.set_title('Top 15 Jogadores - Overall')
+ax.legend()
+ax.invert_yaxis()  # Inverte a ordem dos jogadores
+
+# Exibir tabela de Overall
+st.write("### Tabela de Overall:")
+st.write(top_15_players[['name', 'overall']])
+
+# Gráfico de barras para o Potencial Total
+fig, ax = plt.subplots()
 ax.barh(names_with_spacing, top_15_players['potential'], color='orange', height=bar_width, label='Potencial')
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
-ax.set_title('Top 15 Jogadores')
+ax.set_title('Top 15 Jogadores - Potencial Total')
 ax.legend()
 ax.invert_yaxis()  # Inverte a ordem dos jogadores
+
+# Exibir tabela de Potencial
+st.write("### Tabela de Potencial Total:")
+st.write(top_15_players[['name', 'potential']])
+
+# Mostrar os gráficos
 st.pyplot(fig)
