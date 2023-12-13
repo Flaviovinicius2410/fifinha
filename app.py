@@ -34,7 +34,7 @@ top_15_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(15
 # Calculando o potencial atual, potencial máximo, a diferença de potencial e a idade invertida
 current_potential = top_15_players['potential']
 max_potential = top_15_players.groupby('name')['potential'].transform('max')
-potential_diff = max_potential - current_potential
+potential_diff = current_potential - top_15_players['overall']
 inverse_age = 1 / top_15_players['age']
 
 # Definindo cores com base na diferença de potencial
@@ -50,7 +50,7 @@ names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_player
 
 fig, ax = plt.subplots()
 ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
-ax.barh(names_with_spacing, potential_diff.abs(), left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial')
+ax.barh(names_with_spacing, potential_diff, left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial')
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
 ax.set_title('Top 15 Jogadores - Overall e Diferença de Potencial')
