@@ -52,10 +52,6 @@ fig, ax = plt.subplots()
 ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
 ax.barh(names_with_spacing, potential_diff, left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial')
 
-# Adicionando destaque para Overall + Diferença de Potencial com uma cor diferente
-highlight_color = 'yellow'
-ax.barh(names_with_spacing, top_15_players['overall'] + potential_diff, left=top_15_players['overall'].min(), color=highlight_color, height=bar_width, alpha=0.5, label='Overall + Diferença de Potencial (Destaque)')
-
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
 ax.set_title('Top 15 Jogadores - Overall e Diferença de Potencial')
