@@ -12,13 +12,16 @@ st.write("Colunas no DataFrame:", df.columns)
 
 # Informações sobre jogadores
 st.subheader("Informações sobre Jogadores:")
+# Exibe uma tabela com informações específicas sobre os jogadores
 st.write(df[['player_id', 'name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
 
 # Filtrar apenas as posições puras
+# Conta a quantidade de jogadores por posição pura
 pure_positions = df['position'].str.split('|', expand=True).stack().value_counts()
 
 # Gráfico de distribuição de jogadores por posição pura em um gráfico de barras
 st.subheader("Jogadores Por Posições:")
+# Cria um gráfico de barras horizontais mostrando a distribuição de jogadores por posição pura
 fig, ax = plt.subplots()
 pure_positions.sort_values().plot(kind='barh', ax=ax, color='skyblue')
 ax.set_xlabel('Contagem de Jogadores')
@@ -42,13 +45,12 @@ colors = np.where(potential_diff >= 0, 'green', 'orange')
 top_15_players = top_15_players.sort_values(by=['overall', 'age', 'potential', 'hits'], ascending=[False, True, False, False])
 
 # Gráfico de barras com destaque amarelo para a diferença de potencial
+# Cria um gráfico de barras horizontais para os 15 melhores jogadores
 bar_width = 0.5
 bar_spacing = 1  # Espaçamento entre as barras
 names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_players)) * bar_spacing).astype(str)
 
 fig, ax = plt.subplots()
-
-# Gráfico de barras para os 15 melhores jogadores
 ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
 ax.barh(names_with_spacing, potential_diff, left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial')
 
@@ -60,6 +62,7 @@ ax.invert_yaxis()  # Inverte a ordem dos jogadores
 
 # Exibir tabela de Overall, Diferença de Potencial, Potencial Máximo e Idade Invertida
 st.write("### Tabela de Overall, Diferença de Potencial, Potencial Máximo e Idade Invertida:")
+# Cria uma tabela com informações sobre os 15 melhores jogadores
 potentials_table = pd.DataFrame({
     'Nome': top_15_players['name'],
     'Overall': top_15_players['overall'],
@@ -71,3 +74,33 @@ st.write(potentials_table)
 
 # Mostrar o gráfico
 st.pyplot(fig)
+
+# Gráfico dos 10 melhores jogadores brasileiros
+st.subheader("Top 10 Melhores Jogadores Brasileiros:")
+top_10_brazilian_players = df[df['nationality'] == 'Brazil'].nlargest(10, 'overall')
+fig_top_10_brazilian_players, ax_top_10_brazilian_players = plt.subplots()
+ax_top_10_brazilian_players.bar(top_10_brazilian_players['name'], top_10_brazilian_players['overall'], color='green')
+ax_top_10_brazilian_players.set_xlabel('Jogadores')
+ax_top_10_brazilian_players.set_ylabel('Pontuação Overall')
+ax_top_10_brazilian_players.set_title('Top 10 Melhores Jogadores Brasileiros')
+st.pyplot(fig_top_10_brazilian_players)
+
+# Gráfico dos 10 piores jogadores brasileiros
+st.subheader("Top 10 Piores Jogadores Brasileiros:")
+bottom_10_brazilian_players = df[df['nationality'] == 'Brazil'].nsmallest(10, 'overall')
+fig_bottom_10_brazilian_players, ax_bottom_10_brazilian_players = plt.subplots()
+ax_bottom_10_brazilian_players.bar(bottom_10_brazilian_players['name'], bottom_10_brazilian_players['overall'], color='red')
+ax_bottom_10_brazilian_players.set_xlabel('Jogadores')
+ax_bottom_10_brazilian_players.set_ylabel('Pontuação Overall')
+ax_bottom_10_brazilian_players.set_title('Top 10 Piores Jogadores Brasileiros')
+st.pyplot(fig_bottom_10_brazilian_players)
+
+# Gráfico dos 10 jogadores mais velhos
+st.subheader("Top 10 Jogadores Mais Velhos:")
+top_10_oldest_players = df.nlargest(10, 'age')
+fig_top_10_oldest_players, ax_top_10_oldest_players = plt.subplots()
+ax_top_10_oldest_players.bar(top_10_oldest_players['name'], top_10_oldest_players['age'], color='purple')
+ax_top_10_oldest_players.set_xlabel('Jogadores')
+ax_top_10_oldest_players.set_ylabel('Idade')
+ax_top_10_oldest_players.set_title('Top 10 Jogadores Mais Velhos')
+st.pyplot(fig_top_10_oldest_players)
