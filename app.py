@@ -26,8 +26,6 @@ ax.set_ylabel('Posição Geral')
 ax.set_title('Posições dos jogadores')
 st.pyplot(fig)
 
-# Adicionando gráfico de barras para os 15 melhores jogadores
-st.subheader("Top 15 Jogadores - Gráfico de Barras:")
 # Adicionando critério de desempate usando idade, potencial, hits e potencial máximo
 top_15_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(15, ['overall', 'age', 'potential', 'hits'])
 
@@ -49,8 +47,15 @@ bar_spacing = 1  # Espaçamento entre as barras
 names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_players)) * bar_spacing).astype(str)
 
 fig, ax = plt.subplots()
+
+# Gráfico de barras para os 15 melhores jogadores
 ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
 ax.barh(names_with_spacing, potential_diff, left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial')
+
+# Adicionando destaque para Overall + Diferença de Potencial com uma cor diferente
+highlight_color = 'yellow'
+ax.barh(names_with_spacing, top_15_players['overall'] + potential_diff, left=top_15_players['overall'].min(), color=highlight_color, height=bar_width, alpha=0.5, label='Overall + Diferença de Potencial (Destaque)')
+
 ax.set_xlabel('Pontuação')
 ax.set_ylabel('Jogadores')
 ax.set_title('Top 15 Jogadores - Overall e Diferença de Potencial')
