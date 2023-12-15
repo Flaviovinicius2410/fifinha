@@ -14,7 +14,7 @@ st.write("## Fonte dos Dados")
 st.write("JOGADORES DO FIFA")
 # Visão Geral
 st.write("## Visão Geral")
-st.write("Escolhi essa base de dados do ano de 2021 para estudar os dados que fazem um jogador ser considerado um dos melhores do munndo quanto ourtro um dos piores")
+st.write("Escolhi essa base de dados do ano de 2021 para estudar os dados que fazem um jogador ser considerado um dos melhores do mundo quanto ourtro um dos piores")
 st.write("Essa base tem como informação o overall atual dos jogadores, seu possivel potencial junto a idade e hits de cada jogador")
 
 # Estrutura do Conjunto de Dados
