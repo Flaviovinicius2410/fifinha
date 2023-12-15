@@ -75,10 +75,10 @@ st.pyplot(fig)
 
 # Gráfico de barras para mostrar a evolução potencial dos 15 melhores jogadores
 evolution_fig, evolution_ax = plt.subplots()
-evolution_ax.barh(names_with_spacing, max_potential - current_potential, color='blue', height=bar_width, label='Evolução Potencial')
+evolution_ax.barh(names_with_spacing, max_potential - current_potential, color='blue', height=bar_width, label='Potencial Restante para Evoluir')
 
 evolution_ax.set_ylabel('Jogadores')
-evolution_ax.set_xlabel('Evolução Potencial')
+evolution_ax.set_xlabel('Potencial Restante para Evoluir')
 evolution_ax.set_title('Evolução Potencial dos 15 Melhores Jogadores')
 evolution_ax.legend()
 evolution_ax.invert_yaxis()  # Inverte a ordem dos jogadores
