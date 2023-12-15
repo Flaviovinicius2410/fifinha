@@ -90,4 +90,4 @@ ax_bottom_10_brazilian_players.barh(bottom_10_brazilian_players['name'][::-1], b
 ax_bottom_10_brazilian_players.set_ylabel('Jogadores')
 ax_bottom_10_brazilian_players.set_xlabel('Pontuação Overall')
 ax_bottom_10_brazilian_players.set_title('Top 10 Piores Jogadores Brasileiros')
-st.pyplot(fig_bottom_10_brazilian_players)S
+st.pyplot(fig_bottom_10_brazilian_players)
