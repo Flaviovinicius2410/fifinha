@@ -7,11 +7,6 @@ import numpy as np
 # Usando ";" como delimitador no read_csv
 df = pd.read_csv("train.csv", delimiter=";")
 
-# Informações sobre jogadores
-st.subheader("Informações sobre Jogadores:")
-# Exibe uma tabela com informações específicas sobre os jogadores
-st.write(df[['player_id', 'name', 'nationality', 'position', 'overall', 'age', 'hits', 'potential', 'team']])
-
 # Adicionando critério de desempate usando idade, potencial, hits e potencial máximo
 top_15_players = df[['name', 'overall', 'age', 'potential', 'hits']].nlargest(15, ['overall', 'age', 'potential', 'hits'])
 
@@ -27,7 +22,24 @@ top_15_players = top_15_players.sort_values(by=['overall', 'age', 'potential', '
 # Definindo cores com base na diferença de potencial
 colors = np.where(potential_diff >= 0, 'green', 'orange')
 
-# Gráfico de barras para Overall e Diferença de Potencial
+# Criando a tabela
+potentials_table = pd.DataFrame({
+    'Nome': top_15_players['name'],
+    'Overall': top_15_players['overall'],
+    'Diferença de Potencial': potential_diff,
+    'Potencial Máximo': max_potential,
+    'Idade Invertida': inverse_age
+})
+
+# Configurando a página com duas colunas
+col1, col2 = st.beta_columns(2)
+
+# Exibir a tabela na primeira coluna
+col1.write("### Tabela de Overall, Diferença de Potencial, Potencial Máximo e Idade Invertida:")
+col1.write(potentials_table)
+
+# Gráfico de barras para Overall e Diferença de Potencial na segunda coluna
+col2.subheader("Gráficos:")
 fig, (ax_overall, ax_diff_potential) = plt.subplots(1, 2, figsize=(12, 6))
 
 # Gráfico de barras para Overall
@@ -44,17 +56,5 @@ ax_diff_potential.set_xlabel('Diferença de Potencial')
 ax_diff_potential.set_title('Top 15 Jogadores - Diferença de Potencial')
 ax_diff_potential.invert_yaxis()  # Inverte a ordem dos jogadores
 
-# Exibir tabela de Overall, Diferença de Potencial, Potencial Máximo e Idade Invertida
-st.write("### Tabela de Overall, Diferença de Potencial, Potencial Máximo e Idade Invertida:")
-# Cria uma tabela com informações sobre os 15 melhores jogadores
-potentials_table = pd.DataFrame({
-    'Nome': top_15_players['name'],
-    'Overall': top_15_players['overall'],
-    'Diferença de Potencial': potential_diff,
-    'Potencial Máximo': max_potential,
-    'Idade Invertida': inverse_age
-})
-st.write(potentials_table)
-
-# Mostrar os gráficos
-st.pyplot(fig)
+# Exibir os gráficos na segunda coluna
+col2.pyplot(fig)
