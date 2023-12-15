@@ -75,10 +75,11 @@ st.pyplot(fig)
 
 # Gráfico de barras para mostrar a evolução potencial dos 15 melhores jogadores
 evolution_fig, evolution_ax = plt.subplots()
-evolution_ax.barh(names_with_spacing, max_potential - current_potential, color='blue', height=bar_width, label='Potencial Restante para Evoluir')
+evolution_ax.barh(names_with_spacing, max_potential, color='green', height=bar_width, label='Potencial Máximo')
+evolution_ax.barh(names_with_spacing, current_potential, color='blue', height=bar_width, label='Potencial Atual')
 
 evolution_ax.set_ylabel('Jogadores')
-evolution_ax.set_xlabel('Potencial Restante para Evoluir')
+evolution_ax.set_xlabel('Potencial')
 evolution_ax.set_title('Evolução Potencial dos 15 Melhores Jogadores')
 evolution_ax.legend()
 evolution_ax.invert_yaxis()  # Inverte a ordem dos jogadores
@@ -101,7 +102,4 @@ st.subheader("Top 10 Piores Jogadores Brasileiros:")
 bottom_10_brazilian_players = df[df['nationality'] == 'Brazil'].nsmallest(10, 'overall')
 fig_bottom_10_brazilian_players, ax_bottom_10_brazilian_players = plt.subplots()
 ax_bottom_10_brazilian_players.barh(bottom_10_brazilian_players['name'][::-1], bottom_10_brazilian_players['overall'][::-1], color='red')
-ax_bottom_10_brazilian_players.set_ylabel('Jogadores')
-ax_bottom_10_brazilian_players.set_xlabel('Pontuação Overall')
-ax_bottom_10_brazilian_players.set_title('Top 10 Piores Jogadores Brasileiros')
-st.pyplot(fig_bottom_10_brazilian_players)
+ax_bottom_10_brazil
