@@ -44,29 +44,27 @@ colors = np.where(potential_diff >= 0, 'green', 'orange')
 # Ordenando a tabela dos melhores 15 jogadores do maior para o menor
 top_15_players = top_15_players.sort_values(by=['overall', 'age', 'potential', 'hits'], ascending=[False, True, False, False])
 
-# Gráfico de barras para os 15 melhores jogadores
+# Gráfico de barras para os 15 melhores jogadores exibindo apenas o potencial atual
 bar_width = 0.5
 bar_spacing = 1  # Espaçamento entre as barras
 names_with_spacing = top_15_players['name'] + ' ' + (np.arange(len(top_15_players)) * bar_spacing).astype(str)
 
 fig, ax = plt.subplots()
-ax.barh(names_with_spacing, top_15_players['overall'], color='green', height=bar_width, label='Overall')
-ax.barh(names_with_spacing, potential_diff, left=top_15_players['overall'].min(), color=colors, height=bar_width, alpha=0.5, label='Diferença de Potencial (não visível)')
+ax.barh(names_with_spacing, current_potential, color='green', height=bar_width, label='Potencial Atual')
 
 ax.set_ylabel('Jogadores')
-ax.set_xlabel('Pontuação')
-ax.set_title('Top 15 Jogadores - Overall e Diferença de Potencial')
+ax.set_xlabel('Potencial Atual')
+ax.set_title('Top 15 Jogadores - Potencial Atual')
 ax.legend()
 ax.invert_yaxis()  # Inverte a ordem dos jogadores
 
 # Exibir tabela de Overall, Potencial Máximo, Diferença de Potencial e Idade Invertida
-st.write("### Tabela de Overall, Potencial Máximo, Diferença de Potencial (não visível) e Idade Invertida:")
+st.write("### Tabela de Overall, Potencial Máximo e Idade Invertida:")
 # Cria uma tabela com informações sobre os 15 melhores jogadores
 potentials_table = pd.DataFrame({
     'Nome': top_15_players['name'],
     'Overall': top_15_players['overall'],
     'Potencial Máximo': max_potential,
-    'Diferença de Potencial (não visível)': potential_diff,
     'Idade Invertida': inverse_age
 })
 st.write(potentials_table)
@@ -92,4 +90,4 @@ ax_bottom_10_brazilian_players.barh(bottom_10_brazilian_players['name'][::-1], b
 ax_bottom_10_brazilian_players.set_ylabel('Jogadores')
 ax_bottom_10_brazilian_players.set_xlabel('Pontuação Overall')
 ax_bottom_10_brazilian_players.set_title('Top 10 Piores Jogadores Brasileiros')
-st.pyplot(fig_bottom_10_brazilian_players)
+st.pyplot(fig_bottom_10_brazilian_players)S
