@@ -59,18 +59,32 @@ ax.legend()
 ax.invert_yaxis()  # Inverte a ordem dos jogadores
 
 # Exibir tabela de Overall, Potencial Máximo, Diferença de Potencial e Idade Invertida
-st.write("### Tabela de Overall, Potencial Máximo e Idade Invertida:")
+st.write("### Tabela de Overall, Potencial Máximo, Diferença de Potencial (não visível) e Idade Invertida:")
 # Cria uma tabela com informações sobre os 15 melhores jogadores
 potentials_table = pd.DataFrame({
     'Nome': top_15_players['name'],
     'Overall': top_15_players['overall'],
     'Potencial Máximo': max_potential,
+    'Diferença de Potencial (não visível)': potential_diff,
     'Idade Invertida': inverse_age
 })
 st.write(potentials_table)
 
 # Mostrar o gráfico
 st.pyplot(fig)
+
+# Gráfico de barras para mostrar a evolução potencial dos 15 melhores jogadores
+evolution_fig, evolution_ax = plt.subplots()
+evolution_ax.barh(names_with_spacing, max_potential - current_potential, color='blue', height=bar_width, label='Evolução Potencial')
+
+evolution_ax.set_ylabel('Jogadores')
+evolution_ax.set_xlabel('Evolução Potencial')
+evolution_ax.set_title('Evolução Potencial dos 15 Melhores Jogadores')
+evolution_ax.legend()
+evolution_ax.invert_yaxis()  # Inverte a ordem dos jogadores
+
+# Mostrar o gráfico de evolução potencial
+st.pyplot(evolution_fig)
 
 # Gráfico dos 10 melhores jogadores brasileiros
 st.subheader("Top 10 Melhores Jogadores Brasileiros:")
