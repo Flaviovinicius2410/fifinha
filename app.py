@@ -73,13 +73,18 @@ st.write(potentials_table)
 # Mostrar o gráfico
 st.pyplot(fig)
 
-# Tabela de overall atual dos 15 melhores jogadores
-st.write("### Tabela de Overall Atual dos 15 Melhores Jogadores:")
-overall_table = pd.DataFrame({
-    'Nome': top_15_players['name'],
-    'Overall Atual': top_15_players['overall']
-})
-st.write(overall_table)
+# Gráfico de barras para mostrar o overall atual dos 15 melhores jogadores
+overall_fig, overall_ax = plt.subplots()
+overall_ax.barh(names_with_spacing, top_15_players['overall'], color='purple', height=bar_width, label='Overall Atual')
+
+overall_ax.set_ylabel('Jogadores')
+overall_ax.set_xlabel('Overall Atual')
+overall_ax.set_title('Overall Atual dos 15 Melhores Jogadores')
+overall_ax.legend()
+overall_ax.invert_yaxis()  # Inverte a ordem dos jogadores
+
+# Mostrar o gráfico de overall atual
+st.pyplot(overall_fig)
 
 # Gráfico dos 10 melhores jogadores brasileiros
 st.subheader("Top 10 Melhores Jogadores Brasileiros:")
