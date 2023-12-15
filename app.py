@@ -35,18 +35,16 @@ table_diff_potential = pd.DataFrame({
     'Diferença de Potencial': potential_diff
 })
 
-# Configurando a página com duas colunas
-col1, col2 = st.columns(2)
+# Configurando a página com uma coluna
+col1 = st.column()
 
-# Exibir a tabela de Overall na primeira coluna
+# Exibir as tabelas na mesma coluna
 col1.write("### Tabela de Overall:")
 col1.write(table_overall)
+col1.write("### Tabela de Diferença de Potencial:")
+col1.write(table_diff_potential)
 
-# Exibir a tabela de Diferença de Potencial na segunda coluna
-col2.write("### Tabela de Diferença de Potencial:")
-col2.write(table_diff_potential)
-
-# Gráfico de barras para Overall na terceira coluna
+# Gráfico de barras para Overall na segunda coluna
 st.subheader("Gráfico - Top 15 Jogadores - Overall:")
 fig_overall, ax_overall = plt.subplots(figsize=(6, 6))
 ax_overall.barh(top_15_players['name'], top_15_players['overall'], color='green')
@@ -56,7 +54,7 @@ ax_overall.set_title('Top 15 Jogadores - Overall')
 ax_overall.invert_yaxis()  # Inverte a ordem dos jogadores
 st.pyplot(fig_overall)
 
-# Gráfico de barras para Diferença de Potencial na quarta coluna
+# Gráfico de barras para Diferença de Potencial na terceira coluna
 st.subheader("Gráfico - Top 15 Jogadores - Diferença de Potencial:")
 fig_diff_potential, ax_diff_potential = plt.subplots(figsize=(6, 6))
 ax_diff_potential.barh(top_15_players['name'], potential_diff, color=colors)
