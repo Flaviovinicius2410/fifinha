@@ -21,6 +21,7 @@ st.write("Essa base tem como informação o overall atual dos jogadores, seu pos
 st.write("## Estrutura do Conjunto de Dados")
 st.write(f"- **Número de Linhas (Amostras):** {df.shape[0]}")
 st.write(f"- **Número de Colunas (Variáveis):** {df.shape[1]}")
+st.write(f"- **Lista de Colunas:** {', '.join(df.columns)}")
 
 # Colunas Principais
 st.write("## Colunas Principais")
