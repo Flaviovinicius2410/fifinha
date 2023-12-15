@@ -32,7 +32,7 @@ potentials_table = pd.DataFrame({
 })
 
 # Configurando a página com duas colunas
-col1, col2 = st.beta_columns(2)
+col1, col2 = st.columns(2)
 
 # Exibir a tabela na primeira coluna
 col1.write("### Tabela de Overall, Diferença de Potencial, Potencial Máximo e Idade Invertida:")
